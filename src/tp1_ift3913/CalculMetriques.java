@@ -2,7 +2,9 @@ package tp1_ift3913;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -20,7 +22,14 @@ public class CalculMetriques {
 	 * false pour seulement prendre en compte les classes
 	 */
 	
-	public static boolean recursive = false;
+	public boolean recursive;
+	public ArrayList<Classe> allClasse = new ArrayList<Classe>();
+	public ArrayList<Paquet> allPaquet = new ArrayList<Paquet>();
+	
+	public CalculMetriques(boolean recursive) {
+		this.recursive = recursive;
+		generateClassPaquet();
+	}
 	
 	/**
 	 * Compte le nombre de lignes de code dans un fichier .java en incluant les commentaires.
@@ -29,7 +38,48 @@ public class CalculMetriques {
 	 * @return nombre de lignes de code de la classe
 	 */
 	
-	public static int classe_LOC (String dir) {
+	public int classe_LOC (String dir) {
+		int lignes = 0;
+		try {
+			File file = new File(dir);
+			Scanner myReader = new Scanner(file);
+
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				data = data.replaceAll("\s", "");
+				data = data.replaceAll("\n", "");
+				if (!data.equals("")) {
+					lignes++;
+				}
+			}
+			
+			myReader.close();
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+		}
+		return lignes;
+	}
+	
+	/**
+	 * Compte le nombre de lignes de code des fichiers .java dans un paquet en incluant les commentaires.
+	 * 
+	 * @param dir direction du paquet
+	 * @return nombre de lignes de code de ses classes
+	 */
+	
+	public int paquet_LOC (String dir) {
+		return paquet(dir, "LOC");
+	}
+	
+	/**
+	 * Compte le nombre de lignes de code dans un fichier .java en excluant les commentaires.
+	 * 
+	 * @param dir direction du fichier
+	 * @return nombre de lignes de code de la classe
+	 */
+
+	public int classe_CLOC (String dir) {
 		int lignes = 0;
 		try {
 			File file = new File(dir);
@@ -43,7 +93,7 @@ public class CalculMetriques {
 					data = data.replaceAll("\s", "");
 					data = data.replaceAll("\n", "");
 				}
-				if (data != "") {
+				if (!data.equals("")) {
 					
 					if(data.length() < 2) {
 						if (!ignore) {
@@ -121,54 +171,13 @@ public class CalculMetriques {
 	}
 
 	/**
-	 * Compte le nombre de lignes de code des fichiers .java dans un paquet en incluant les commentaires.
-	 * 
-	 * @param dir direction du paquet
-	 * @return nombre de lignes de code de ses classes
-	 */
-	
-	public static int paquet_LOC (String dir) {
-		return paquet(dir, "LOC");
-	}
-	
-	/**
-	 * Compte le nombre de lignes de code dans un fichier .java en excluant les commentaires.
-	 * 
-	 * @param dir direction du fichier
-	 * @return nombre de lignes de code de la classe
-	 */
-	
-	public static int classe_CLOC (String dir) {
-		int lignes = 0;
-		try {
-			File file = new File(dir);
-			Scanner myReader = new Scanner(file);
-
-			while (myReader.hasNextLine()) {
-				String data = myReader.nextLine();
-				data = data.replaceAll("\s", "");
-				data = data.replaceAll("\n", "");
-				if (data != "") {
-					lignes++;
-				}
-			}
-			
-			myReader.close();
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-		}
-		return lignes;
-	}
-	
-	/**
 	 * Compte le nombre de lignes de code des fichiers .java dans un paquet en excluant les commentaires.
 	 * 
 	 * @param dir direction du paquet
 	 * @return nombre de lignes de code de ses classes
 	 */
 	
-	public static int paquet_CLOC (String dir) {
+	public int paquet_CLOC (String dir) {
 		return paquet(dir, "CLOC");
 	}
 	
@@ -180,29 +189,29 @@ public class CalculMetriques {
 	 * @return nombre de lignes de code de ses classes
 	 */
 	
-	public static int paquet (String dir, String option) {
+	public int paquet (String dir, String option) {
 		int lignes = 0;
+		boolean classe = false;
+		String name = "";
 		try {
 			File directory = new File(dir);
 			directory.createNewFile();
+			name = directory.getName();
 			
 			if(recursive) {
 				// package
 				if (directory.isDirectory()) {
+					classe = false;
 					File filesList[] = directory.listFiles();
 					for(File directory2 : filesList) {
-						if(option.equals("LOC")) {
-							lignes += paquet(directory2.getAbsolutePath(), option);
-						} else {
-							lignes += paquet(directory2.getAbsolutePath(), option);
-						} 
+						lignes += paquet(directory2.getAbsolutePath(), option);
 					}
-					//System.out.println("----- " + directory.getName() + " : " + lignes + "\n");
+					//System.out.println("----- " + name + " : " + lignes + "\n");
 					
 				// file
 				} else {
-					String name = directory.getName();
 					if(name.substring(name.length()-5, name.length()).equals(".java")) {
+						classe = true;
 						if(option.equals("LOC")) {
 							lignes = classe_LOC(dir);
 						} else {
@@ -214,13 +223,16 @@ public class CalculMetriques {
 			} else {
 				File filesList[] = directory.listFiles();
 				for(File directory2 : filesList) {
-					String name = directory2.getName();
-					if(name.length() > 5 && name.substring(name.length()-5, name.length()).equals(".java")) {
+					String name2 = directory2.getName();
+					if(name2.length() > 5 && name2.substring(name2.length()-5, name2.length()).equals(".java")) {
+						int l = 0;
 						if(option.equals("LOC")) {
-							lignes += classe_LOC(directory2.getAbsolutePath());
+							l = classe_LOC(directory2.getAbsolutePath());
 						} else {
-							lignes += classe_CLOC(directory2.getAbsolutePath());
+							l = classe_CLOC(directory2.getAbsolutePath());
 						}
+						addClassePaquet(true, directory2.getAbsolutePath(), name2, String.valueOf(l), option);
+						lignes += l;
 						//System.out.println(name + " : " + lignes);
 					}
 				}
@@ -228,33 +240,174 @@ public class CalculMetriques {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		addClassePaquet(classe, dir, name, String.valueOf(lignes), option);
+		
 		return lignes;
+	}
+	
+	/**
+	 * Cree les objets Classe et Paquet et les ajoute aux listes.
+	 * Trouve l'instance si deja existant et la modifie.
+	 * 
+	 * @param classe si c'est une classe ou un paquet
+	 * @param dir direction
+	 * @param name nom
+	 * @param valeur le nombre de lignes ou la densite
+	 * @param option "LOC" si commentaires inclus dans les lignes comptees, "CLOC" si exclus, "DC" pour la densite
+	 */
+	
+	public void addClassePaquet(boolean classe, String dir, String name, String valeur, String option) {
+		if(classe) {
+			Classe c = null;
+			for(Classe i : allClasse){
+		        if(i.getDir() != null && i.getDir().equals(dir)){
+		        	c = i;
+		        	break;
+		        }
+		    }
+			if (c == null) {
+				c = new Classe(dir, name);
+				if(option.equals("LOC")) {
+					c.setLoc(valeur);
+				} else if(option.equals("CLOC")) {
+					c.setCloc(valeur);
+				} else {
+					c.setDc(valeur);
+				}
+				allClasse.add(c);
+			} else {
+				if(option.equals("LOC")) {
+					c.setLoc(valeur);
+				} else if(option.equals("CLOC")){
+					c.setCloc(valeur);
+				} else {
+					c.setDc(valeur);
+				}
+			}
+		} else {
+			Paquet p = null;
+			for(Paquet i : allPaquet){
+		        if(i.getDir() != null && i.getDir().equals(dir)){
+		        	p = i;
+		        	break;
+		        }
+		    }
+			if (p == null) {
+				p = new Paquet(dir, name);
+				if(option.equals("LOC")) {
+					p.setLoc(valeur);
+				} else if(option.equals("CLOC")){
+					p.setCloc(valeur);
+				} else {
+					p.setDc(valeur);
+				}
+				allPaquet.add(p);
+			} else {
+				if(option.equals("LOC")) {
+					p.setLoc(valeur);
+				} else if(option.equals("CLOC")){
+					p.setCloc(valeur);
+				} else {
+					p.setDc(valeur);
+				}
+			}
+		}
 	}
 
 	/**
-	 * Densité de commentaires d'une classe.
+	 * Densite de commentaires d'une classe.
 	 * 
 	 * @param dir direction du fichier
 	 * @return densité de commentaires de la classe
 	 */
 	
-	public static double classe_DC (String dir) {
+	public double classe_DC (String dir) {
 		return (double)classe_CLOC (dir) / (double)classe_LOC (dir);
 	}
 
 	/**
-	 * Densité de commentaires d'un paquet.
+	 * Densite de commentaires d'un paquet.
 	 * 
 	 * @param dir direction du paquet
 	 * @return densité de commentaires du paquet
 	 */
 	
-	public static double paquet_DC (String dir) {
+	public double paquet_DC (String dir) {
 		return (double)paquet_CLOC (dir) / (double)paquet_LOC (dir);
 	}
+
+	/**
+	 * Methode commune pour calculer les densites des paquets et classes.
+	 * 
+	 * @param dir direction du dossier
+	 */
 	
-	public static void main(String[] args) throws IOException {
-		//String dir = "../jfreechart-master/src/main/java/org/jfree/chart";
-		//System.out.println(paquet_DC(dir));
+	public void densite (String dir) {
+		double densite = 0.0;
+		boolean classe = false;
+		String name = "";
+		try {
+			File directory = new File(dir);
+			directory.createNewFile();
+			name = directory.getName();
+			
+			if(recursive) {
+				// package
+				if (directory.isDirectory()) {
+					classe = false;
+					densite = paquet_DC(dir);
+					File filesList[] = directory.listFiles();
+					for(File directory2 : filesList) {
+						densite(directory2.getAbsolutePath());
+					}
+					
+				// file
+				} else if(name.substring(name.length()-5, name.length()).equals(".java")) {
+					classe = true;
+					densite = classe_DC(dir);
+				}
+			} else {
+				File filesList[] = directory.listFiles();
+				densite = paquet_DC(dir);
+				for(File directory2 : filesList) {
+					String name2 = directory2.getName();
+					if(name2.length() > 5 && name2.substring(name2.length()-5, name2.length()).equals(".java")) {
+						double d = classe_DC(directory2.getAbsolutePath());
+						addClassePaquet(true, directory2.getAbsolutePath(), name2, String.valueOf(d), "DC");
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		addClassePaquet(classe, dir, name, String.valueOf(densite), "DC");
+	}
+	
+	/**
+	 * Genere les instances de Classe et Paquet, avec LOC, CLOC et DC calcules.
+	 */
+	
+	public void generateClassPaquet() {
+		System.out.println("Direction du dossier à analyser :\n");
+		Scanner in = new Scanner(System.in);
+		String dir = in.nextLine();
+		densite(dir);
+		in.close();
+	}
+	
+	public static void main(String[] args) {
+//		String dir = "../jfreechart-master/src/main/java/org/jfree/chart";
+//		CalculMetriques c = new CalculMetriques(true);
+//		for (Classe cl : c.allClasse) {
+//			if(cl.getName().equals("ChartColor.java")) {
+//				System.out.println(cl.getName());
+//				System.out.println(cl.getDir());
+//				System.out.println(cl.getCloc());
+//				System.out.println(cl.getLoc());
+//				System.out.println(cl.getDc() + "\n");
+//			}
+//		}
 	}
 }
