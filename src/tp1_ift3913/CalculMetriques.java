@@ -3,15 +3,10 @@ package tp1_ift3913;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /**
  * Partie 1
- * 
- * @author Louis Bertrand ()
- * @author Nadia Charonov (20121063)
  */
 
 
@@ -390,24 +385,10 @@ public class CalculMetriques {
 	 */
 	
 	public void generateClassPaquet() {
-		System.out.println("Direction du dossier à analyser :\n");
+		System.out.println("Direction du dossier à analyser :");
 		Scanner in = new Scanner(System.in);
 		String dir = in.nextLine();
 		densite(dir);
 		in.close();
-	}
-	
-	public static void main(String[] args) {
-//		String dir = "../jfreechart-master/src/main/java/org/jfree/chart";
-//		CalculMetriques c = new CalculMetriques(true);
-//		for (Classe cl : c.allClasse) {
-//			if(cl.getName().equals("ChartColor.java")) {
-//				System.out.println(cl.getName());
-//				System.out.println(cl.getDir());
-//				System.out.println(cl.getCloc());
-//				System.out.println(cl.getLoc());
-//				System.out.println(cl.getDc() + "\n");
-//			}
-//		}
 	}
 }

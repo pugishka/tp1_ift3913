@@ -2,10 +2,18 @@ package tp1_ift3913;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Arrays;
-import java.util.List;
+
+/**
+ * Partie 2
+ *
+ */
 
 public class GenerateCVS {
+
+	/**
+	 * Genere le fichier .csv contennant les informations des classes.
+	 *
+	 */
 
 	public static void classes() {
 		
@@ -14,7 +22,7 @@ public class GenerateCVS {
 			FileWriter writer = new FileWriter(csvFile);
 			writer.append("chemin");
 			writer.append(",");
-			writer.append("class");
+			writer.append("classe");
 			writer.append(",");
 			writer.append("classe_LOC");
 			writer.append(",");
@@ -26,18 +34,18 @@ public class GenerateCVS {
 
 			CalculMetriques c = new CalculMetriques(true);
 			for (Classe cl : c.allClasse) {
-				//TODO : ajouter les attributs de chaque classe cl dans le csv csvFile
-				
-				//writer.append(String.join(",", listStringData));
-				//writer.append("\n");
+				writer.append(String.join(",", cl.toList()));
+				writer.append("\n");
 			}
 
 			writer.flush();
 			writer.close();
+			
+			System.out.println("Fichier créé.");
 		      
 		      
 	    } catch (Exception e) {
-	      e.printStackTrace();
+	    	e.printStackTrace();
 	    }
 		
 	}
@@ -45,6 +53,7 @@ public class GenerateCVS {
 	
 	public static void main(String[] args) {
 		
+		//GenerateCVS.classes();
 		
 	}
 

@@ -1,5 +1,12 @@
 package tp1_ift3913;
 
+import java.util.ArrayList;
+
+/**
+ * Classe pour creer un objet qui contiendra les informations du fichier .java analyse.
+ *
+ */
+
 public class Classe {
 	public String dir;
 	public String name;
@@ -42,6 +49,16 @@ public class Classe {
 
 	public void setDc(String dc) {
 		this.dc = dc;
+	}
+	
+	public ArrayList<String> toList(){
+		ArrayList<String> liste = new ArrayList<String>();
+		liste.add(dir);
+		liste.add(name);
+		liste.add(loc);
+		liste.add(cloc);
+		liste.add(dc);
+		return liste;
 	}
 	
 }

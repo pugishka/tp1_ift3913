@@ -1,5 +1,10 @@
 package tp1_ift3913;
 
+/**
+ * Classe pour creer un objet qui contiendra les informations du packet analyse.
+ *
+ */
+
 public class Paquet {
 	public String dir;
 	public String name;
