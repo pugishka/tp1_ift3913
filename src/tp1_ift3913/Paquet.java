@@ -11,6 +11,7 @@ public class Paquet {
 	public String loc;
 	public String cloc;
 	public String dc;
+	public String WCP;
 	
 	public Paquet(String dir, String name) {
 		this.dir = dir;
@@ -48,6 +49,10 @@ public class Paquet {
 	public void setDc(String dc) {
 		this.dc = dc;
 	}
+
+	public void setWCP(String WCP) { this.WCP = WCP; }
+
+	public String getWCP() { return this.WCP; }
 	
 	
 	

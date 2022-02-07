@@ -13,6 +13,7 @@ public class Classe {
 	public String loc;
 	public String cloc;
 	public String dc;
+	public String WMC;
 	
 	public Classe(String dir, String name) {
 		this.dir = dir;
@@ -50,6 +51,10 @@ public class Classe {
 	public void setDc(String dc) {
 		this.dc = dc;
 	}
+
+	public void setWMC(String WMC) { this.WMC = WMC; }
+
+	public String getWMC() { return this.WMC; }
 	
 	public ArrayList<String> toList(){
 		ArrayList<String> liste = new ArrayList<String>();
