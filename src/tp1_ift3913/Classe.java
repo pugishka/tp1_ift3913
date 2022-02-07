@@ -14,6 +14,7 @@ public class Classe {
 	public String cloc;
 	public String dc;
 	public String WMC;
+	public String classe_BC;
 	
 	public Classe(String dir, String name) {
 		this.dir = dir;
@@ -55,6 +56,20 @@ public class Classe {
 	public void setWMC(String WMC) { this.WMC = WMC; }
 
 	public String getWMC() { return this.WMC; }
+
+	public void setPaquetBC(){
+
+		if(this.WMC == null || this.dc == null){
+			System.out.println("An error has occured when calculating BC of class:");
+			System.out.println(this.dir);
+			return;
+		}
+
+		int classeBC = Integer.valueOf(this.dc)/Integer.valueOf(this.WMC);
+		this.classe_BC = String.valueOf(classeBC);
+	}
+
+	public String getClasse_BC(){ return this.classe_BC;}
 	
 	public ArrayList<String> toList(){
 		ArrayList<String> liste = new ArrayList<String>();
@@ -63,6 +78,8 @@ public class Classe {
 		liste.add(loc);
 		liste.add(cloc);
 		liste.add(dc);
+		liste.add(this.WMC);
+		liste.add(this.classe_BC);
 		return liste;
 	}
 	

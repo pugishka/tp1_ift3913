@@ -12,6 +12,7 @@ public class Paquet {
 	public String cloc;
 	public String dc;
 	public String WCP;
+	public String paquet_BC;
 	
 	public Paquet(String dir, String name) {
 		this.dir = dir;
@@ -53,6 +54,20 @@ public class Paquet {
 	public void setWCP(String WCP) { this.WCP = WCP; }
 
 	public String getWCP() { return this.WCP; }
+
+	public void setPaquet_BC(){
+
+		if(this.WCP == null || this.dc == null){
+			System.out.println("An error has occured when calculating BC of paquet:");
+			System.out.println(this.dir);
+			return;
+		}
+
+		int paquetBC = Integer.valueOf(this.dc)/Integer.valueOf(this.WCP);
+		this.paquet_BC = String.valueOf(paquetBC);
+	}
+
+	public String getPaquet_BC() {return this.paquet_BC;}
 	
 	
 	
