@@ -57,7 +57,7 @@ public class Classe {
 
 	public String getWMC() { return this.WMC; }
 
-	public void setPaquetBC(){
+	public void setClasse_BC(){
 
 		if(this.WMC == null || this.dc == null){
 			System.out.println("An error has occured when calculating BC of class:");
@@ -70,7 +70,11 @@ public class Classe {
 	}
 
 	public String getClasse_BC(){ return this.classe_BC;}
-	
+
+	/**
+	 * Covertit les paramètres d'un object Classe en un tableau de Strings
+	 * @return un tableau de Strings correspondant aux paramètres de la classe
+	 */
 	public ArrayList<String> toList(){
 		ArrayList<String> liste = new ArrayList<String>();
 		liste.add(dir);

@@ -20,6 +20,7 @@ public class CalculMetriques {
 	public boolean recursive;
 	public ArrayList<Classe> allClasse = new ArrayList<Classe>();
 	public ArrayList<Paquet> allPaquet = new ArrayList<Paquet>();
+	private WMC_Calculator wmc_calculator = new WMC_Calculator();
 	
 	public CalculMetriques(boolean recursive) {
 		this.recursive = recursive;
@@ -379,6 +380,41 @@ public class CalculMetriques {
 		
 		addClassePaquet(classe, dir, name, String.valueOf(densite), "DC");
 	}
+
+	/**
+	 * Cacule les WMC et les BC des classes dans la liste des classes dans le paquet
+	 */
+	public void calculateClassesWMC(){
+
+		Classe classe = null;
+		String classeDIR = null;
+
+		for(int i = 0; i<this.allClasse.size(); i++){
+			classe = this.allClasse.get(i);
+			wmc_calculator.calculateWMC(classe);
+			classe.setClasse_BC();
+		}
+
+	}
+
+	public void calculatePaquetsWCP(){
+
+		Paquet paquet = null;
+		String paquetDir = null;
+		int WCP = 0;
+
+		for(int i = 0; i<this.allPaquet.size(); i++){
+			paquet = this.allPaquet.get(i);
+			WCP = wmc_calculator.paquet_WCP(paquet, this.allClasse);
+			paquet.setWCP(String.valueOf(WCP));
+			paquet.setPaquet_BC();
+		}
+
+
+
+	}
+
+
 	
 	/**
 	 * Genere les instances de Classe et Paquet, avec LOC, CLOC et DC calcules.
@@ -389,6 +425,8 @@ public class CalculMetriques {
 		Scanner in = new Scanner(System.in);
 		String dir = in.nextLine();
 		densite(dir);
+		//calculateClassesWMC();
+		//calculatePaquetsWCP();
 		in.close();
 	}
 }

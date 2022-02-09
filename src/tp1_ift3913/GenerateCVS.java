@@ -15,7 +15,7 @@ public class GenerateCVS {
 	 *
 	 */
 
-	public static void classes() {
+	public static void classes(CalculMetriques c) {
 		
 		try {
 			File csvFile = new File("classes.csv");
@@ -29,10 +29,14 @@ public class GenerateCVS {
 			writer.append("classe_CLOC");
 			writer.append(",");
 			writer.append("classe_DC");
+			writer.append(",");
+			writer.append("classe_WMC");
+			writer.append(",");
+			writer.append("classe_BC");
 			writer.append("\n");
 			
 
-			CalculMetriques c = new CalculMetriques(true);
+			//CalculMetriques c = new CalculMetriques(true);
 			for (Classe cl : c.allClasse) {
 				writer.append(String.join(",", cl.toList()));
 				writer.append("\n");
@@ -41,7 +45,7 @@ public class GenerateCVS {
 			writer.flush();
 			writer.close();
 			
-			System.out.println("Fichier créé.");
+			System.out.println("Fichier .cvs de classes créé.");
 		      
 		      
 	    } catch (Exception e) {
@@ -49,11 +53,52 @@ public class GenerateCVS {
 	    }
 		
 	}
+
+	public static void paquetCSV(CalculMetriques c){
+
+		try {
+			File csvFile = new File("paquets.csv");
+			FileWriter writer = new FileWriter(csvFile);
+			writer.append("chemin");
+			writer.append(",");
+			writer.append("paquet");
+			writer.append(",");
+			writer.append("paquet_LOC");
+			writer.append(",");
+			writer.append("paquet_CLOC");
+			writer.append(",");
+			writer.append("paquet_DC");
+			writer.append(",");
+			writer.append("paquet_WCP");
+			writer.append(",");
+			writer.append("paquet_BC");
+			writer.append("\n");
+
+
+			//CalculMetriques c = new CalculMetriques(true);
+			for (Paquet pq : c.allPaquet) {
+				writer.append(String.join(",", pq.toList()));
+				writer.append("\n");
+			}
+
+			writer.flush();
+			writer.close();
+
+			System.out.println("Fichier .cvs de paquets créé.");
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 	
 	
 	public static void main(String[] args) {
-		
-		//GenerateCVS.classes();
+
+		//CalculMetriques cm = new CalculMetriques(true);
+		//GenerateCVS.classes(cm);
+		//GenerateCVS.paquetCSV(cm);
 		
 	}
 

@@ -1,5 +1,7 @@
 package tp1_ift3913;
 
+import java.util.ArrayList;
+
 /**
  * Classe pour creer un objet qui contiendra les informations du packet analyse.
  *
@@ -68,8 +70,21 @@ public class Paquet {
 	}
 
 	public String getPaquet_BC() {return this.paquet_BC;}
-	
-	
-	
+
+	/**
+	 * Covertit les paramètres d'un object Paquet en un tableau de Strings
+	 * @return un tableau de Strings correspondant aux paramètres du paquet
+	 */
+	public ArrayList<String> toList(){
+		ArrayList<String> liste = new ArrayList<String>();
+		liste.add(dir);
+		liste.add(name);
+		liste.add(loc);
+		liste.add(cloc);
+		liste.add(dc);
+		liste.add(this.WCP);
+		liste.add(this.paquet_BC);
+		return liste;
+	}
 	
 }

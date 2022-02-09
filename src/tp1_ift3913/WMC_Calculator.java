@@ -12,7 +12,7 @@ public class WMC_Calculator {
      * @param dir le nom du fichier à analyser
      * @return WMC la somme pondérée des complexités cyclomatiques de McCabe des méthodes de la classe
      */
-    public int Class_WMC (String dir) {
+    public int class_WMC (String dir) {
         int WMC  = 0;
         int methodCount = -1;
         int nodes = 2;
@@ -64,7 +64,7 @@ public class WMC_Calculator {
      * @param classes un tableau de classe se trouvant dans le paquet
      * @return le WCP pondere des classes se trouvant dans la paquet fourni
      */
-    public int Paquet_WCP(Paquet paquet, ArrayList<Classe> classes){
+    public int paquet_WCP(Paquet paquet, ArrayList<Classe> classes){
         int sumWMC = 0;
         int classCount = 0;
         String paquetDir = paquet.getDir();
@@ -93,7 +93,7 @@ public class WMC_Calculator {
      */
     public void calculateWMC(Classe classe){
 
-        classe.setWMC(Integer.toString(Class_WMC(classe.getDir())));
+        classe.setWMC(Integer.toString(class_WMC(classe.getDir())));
 
     }
 
