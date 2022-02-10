@@ -77,6 +77,9 @@ public class GenerateCVS {
 
 			//CalculMetriques c = new CalculMetriques(true);
 			for (Paquet pq : c.allPaquet) {
+				if(pq.getPaquet_BC().equals("NaN")){
+					continue;
+				}
 				writer.append(String.join(",", pq.toList()));
 				writer.append("\n");
 			}
@@ -88,13 +91,18 @@ public class GenerateCVS {
 
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Une erreur est servenue lors de la création des fichiers .cvs");
 		}
 
 	}
 	
 	
 	public static void main(String[] args) {
+
+		System.out.println("Logiciel créé dans le cadre du cours ift-3913 par:");
+		System.out.println("Nadia Charonov");
+		System.out.println("Louis Bertrand");
 
 		CalculMetriques cm = new CalculMetriques(true);
 		GenerateCVS.classes(cm);

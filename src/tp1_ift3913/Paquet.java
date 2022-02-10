@@ -59,10 +59,14 @@ public class Paquet {
 
 	public void setPaquet_BC(){
 
-		if(this.WCP == null || this.dc == null){
+		if(this.WCP == null || this.dc == null) {
 			System.out.println("An error has occured when calculating BC of paquet:");
 			System.out.println(this.dir);
 			return;
+		}
+
+		if(Integer.valueOf(this.WCP) == 0){
+			this.paquet_BC = "0";
 		}
 
 		Double paquetBC = Double.parseDouble(this.dc)/Double.parseDouble(this.WCP);

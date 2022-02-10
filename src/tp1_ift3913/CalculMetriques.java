@@ -161,7 +161,7 @@ public class CalculMetriques {
 			myReader.close();
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return lignes;
 	}
@@ -234,7 +234,7 @@ public class CalculMetriques {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		addClassePaquet(classe, dir, name, String.valueOf(lignes), option);
@@ -263,8 +263,6 @@ public class CalculMetriques {
 		        }
 		    }
 			if (c == null) {
-				//test
-				System.out.println(name);
 				c = new Classe(dir, name);
 				if(option.equals("LOC")) {
 					c.setLoc(valeur);
@@ -371,7 +369,6 @@ public class CalculMetriques {
 				} else if(name.substring(name.length()-5, name.length()).equals(".java")) {
 					classe = true;
 					densite = classe_DC(dir);
-					System.out.println(densite);
 				}
 			} else {
 				File filesList[] = directory.listFiles();
@@ -385,7 +382,7 @@ public class CalculMetriques {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		addClassePaquet(classe, dir, name, String.valueOf(densite), "DC");
