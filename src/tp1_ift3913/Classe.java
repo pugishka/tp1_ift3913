@@ -65,7 +65,7 @@ public class Classe {
 			return;
 		}
 
-		int classeBC = Integer.valueOf(this.dc)/Integer.valueOf(this.WMC);
+		Double classeBC = Double.parseDouble(this.dc)/Double.parseDouble(this.WMC);
 		this.classe_BC = String.valueOf(classeBC);
 	}
 

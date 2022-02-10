@@ -55,6 +55,14 @@ public class WMC_Calculator {
         if(methodCount == -1){
             return -1;
         }
+        //cas si une classe n'a pas de methode for some reason
+        if(methodCount == 0){
+            methodCount = 1;
+        }
+
+        if(WMC == 0){
+            WMC = 1;
+        }
         return WMC/methodCount;
     }
 

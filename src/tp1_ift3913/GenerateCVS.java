@@ -96,9 +96,9 @@ public class GenerateCVS {
 	
 	public static void main(String[] args) {
 
-		//CalculMetriques cm = new CalculMetriques(true);
-		//GenerateCVS.classes(cm);
-		//GenerateCVS.paquetCSV(cm);
+		CalculMetriques cm = new CalculMetriques(true);
+		GenerateCVS.classes(cm);
+		GenerateCVS.paquetCSV(cm);
 		
 	}
 

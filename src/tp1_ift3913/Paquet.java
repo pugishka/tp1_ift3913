@@ -65,7 +65,7 @@ public class Paquet {
 			return;
 		}
 
-		int paquetBC = Integer.valueOf(this.dc)/Integer.valueOf(this.WCP);
+		Double paquetBC = Double.parseDouble(this.dc)/Double.parseDouble(this.WCP);
 		this.paquet_BC = String.valueOf(paquetBC);
 	}
 

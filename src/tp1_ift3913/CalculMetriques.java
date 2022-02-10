@@ -42,7 +42,7 @@ public class CalculMetriques {
 
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
-				data = data.replaceAll("\s", "");
+				data = data.replaceAll(" ", ""); //s
 				data = data.replaceAll("\n", "");
 				if (!data.equals("")) {
 					lignes++;
@@ -86,7 +86,7 @@ public class CalculMetriques {
 			while (myReader.hasNextLine() || ignore) {
 				if (!ignore) {
 					data = myReader.nextLine();
-					data = data.replaceAll("\s", "");
+					data = data.replaceAll(" ", ""); //s
 					data = data.replaceAll("\n", "");
 				}
 				if (!data.equals("")) {
@@ -135,7 +135,7 @@ public class CalculMetriques {
 								commentEnd++;
 							}
 							data = myReader.nextLine();
-							data = data.replaceAll("\s", "");
+							data = data.replaceAll(" ", ""); //s
 							sameLine = false;
 						}
 						
@@ -263,6 +263,8 @@ public class CalculMetriques {
 		        }
 		    }
 			if (c == null) {
+				//test
+				System.out.println(name);
 				c = new Classe(dir, name);
 				if(option.equals("LOC")) {
 					c.setLoc(valeur);
@@ -319,6 +321,13 @@ public class CalculMetriques {
 	 */
 	
 	public double classe_DC (String dir) {
+
+		//double classeCloc = (double)classe_CLOC (dir);
+		//double classeLoc = (double)classe_LOC (dir);
+		//double ret = classeCloc/classeLoc;
+		//return ret;
+
+
 		return (double)classe_CLOC (dir) / (double)classe_LOC (dir);
 	}
 
@@ -362,6 +371,7 @@ public class CalculMetriques {
 				} else if(name.substring(name.length()-5, name.length()).equals(".java")) {
 					classe = true;
 					densite = classe_DC(dir);
+					System.out.println(densite);
 				}
 			} else {
 				File filesList[] = directory.listFiles();
@@ -397,6 +407,9 @@ public class CalculMetriques {
 
 	}
 
+	/**
+	 *Cacule les WCP et les BC des paquets dans la liste des paquets
+	 */
 	public void calculatePaquetsWCP(){
 
 		Paquet paquet = null;
@@ -425,8 +438,8 @@ public class CalculMetriques {
 		Scanner in = new Scanner(System.in);
 		String dir = in.nextLine();
 		densite(dir);
-		//calculateClassesWMC();
-		//calculatePaquetsWCP();
+		calculateClassesWMC();
+		calculatePaquetsWCP();
 		in.close();
 	}
 }
