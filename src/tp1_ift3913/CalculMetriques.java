@@ -200,7 +200,7 @@ public class CalculMetriques {
 					classe = false;
 					File filesList[] = directory.listFiles();
 					for(File directory2 : filesList) {
-						lignes += paquet(directory2.getAbsolutePath(), option);
+						lignes += paquet(directory2.getPath(), option);
 					}
 					//System.out.println("----- " + name + " : " + lignes + "\n");
 					
@@ -223,11 +223,11 @@ public class CalculMetriques {
 					if(name2.length() > 5 && name2.substring(name2.length()-5, name2.length()).equals(".java")) {
 						int l = 0;
 						if(option.equals("LOC")) {
-							l = classe_LOC(directory2.getAbsolutePath());
+							l = classe_LOC(directory2.getPath());
 						} else {
-							l = classe_CLOC(directory2.getAbsolutePath());
+							l = classe_CLOC(directory2.getPath());
 						}
-						addClassePaquet(true, directory2.getAbsolutePath(), name2, String.valueOf(l), option);
+						addClassePaquet(true, directory2.getPath(), name2, String.valueOf(l), option);
 						lignes += l;
 						//System.out.println(name + " : " + lignes);
 					}
@@ -362,7 +362,7 @@ public class CalculMetriques {
 					densite = paquet_DC(dir);
 					File filesList[] = directory.listFiles();
 					for(File directory2 : filesList) {
-						densite(directory2.getAbsolutePath());
+						densite(directory2.getPath());
 					}
 					
 				// file
@@ -376,8 +376,8 @@ public class CalculMetriques {
 				for(File directory2 : filesList) {
 					String name2 = directory2.getName();
 					if(name2.length() > 5 && name2.substring(name2.length()-5, name2.length()).equals(".java")) {
-						double d = classe_DC(directory2.getAbsolutePath());
-						addClassePaquet(true, directory2.getAbsolutePath(), name2, String.valueOf(d), "DC");
+						double d = classe_DC(directory2.getPath());
+						addClassePaquet(true, directory2.getPath(), name2, String.valueOf(d), "DC");
 					}
 				}
 			}
