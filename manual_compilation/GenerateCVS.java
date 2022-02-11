@@ -54,10 +54,6 @@ public class GenerateCVS {
 		
 	}
 
-	/**
-	 * cree le fichier cvs des paquets
-	 * @param c l'objet de calcul de metriques ayant analisé le paquet
-	 */
 	public static void paquetCSV(CalculMetriques c){
 
 		try {
