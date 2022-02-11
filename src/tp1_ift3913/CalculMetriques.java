@@ -411,7 +411,7 @@ public class CalculMetriques {
 
 		Paquet paquet = null;
 		String paquetDir = null;
-		int WCP = 0;
+		double WCP = 0;
 
 		for(int i = 0; i<this.allPaquet.size(); i++){
 			paquet = this.allPaquet.get(i);

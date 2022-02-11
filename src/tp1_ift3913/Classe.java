@@ -57,6 +57,9 @@ public class Classe {
 
 	public String getWMC() { return this.WMC; }
 
+	/**
+	 * calcule le BC de la classe et l'assigne
+	 */
 	public void setClasse_BC(){
 
 		if(this.WMC == null || this.dc == null){

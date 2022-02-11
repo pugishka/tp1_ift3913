@@ -12,11 +12,13 @@ public class WMC_Calculator {
      * @param dir le nom du fichier à analyser
      * @return WMC la somme pondérée des complexités cyclomatiques de McCabe des méthodes de la classe
      */
-    public int class_WMC (String dir) {
-        int WMC  = 0;
-        int methodCount = -1;
+    public double class_WMC (String dir) {
+        double WMC  = 0;
+        double methodCount = -1;
         int nodes = 2;
         int edges = 0;
+        int commentIndex;
+        boolean longComment = false;
 
 
         try {
@@ -27,7 +29,7 @@ public class WMC_Calculator {
                 String data = myReader.nextLine();
 
                 //on verifie si la ligne correspond au début d'unce classe
-                if (data.contains("public") || data.contains("private") || data.contains("restricted")) {
+                if ((data.contains("public") || data.contains("private") || data.contains("restricted")) && data.contains("{")) {
                     methodCount++;
                     WMC += edges - nodes + 2;
                     nodes = 2;
@@ -35,14 +37,30 @@ public class WMC_Calculator {
                     continue;
                 }
 
-                //TODO revenir optimiser cette partie de calcul des edges et nodes
+                //vérifie si on se trouve dans une section de commentaire sur plusieurs lignes
+                if(data.contains("/*")){
+                    longComment = true;
+                }
+                if(data.contains("*/")){
+                    longComment = false;
+                }
+                if(longComment == true){
+                    continue;
+                }
+                //ignore les commentaires sur une seule ligne en enlevant le texte après le début du commentaire
+                if(data.contains("//")){
+                    commentIndex = data.indexOf("//");
+                    data = data.substring(0,commentIndex);
+                }
+
+
                 if(data.contains("else if")){nodes += 1; edges +=1; continue;}
-                else if(data.contains("if")){nodes +=2; edges +=3; continue;}
-                else if(data.contains("else")){nodes += 1; edges +=1; continue;}
-                if(data.contains("while")){nodes += 2; edges += 3; continue;}
-                if(data.contains("for")){nodes += 2; edges += 3; continue;}
-                if(data.contains("switch")){nodes +=1; edges += 1; continue;}
-                if(data.contains("case")){nodes += 1; nodes +=2; continue;}
+                else if(data.contains(" if")){nodes +=2; edges +=3; continue;}
+                else if(data.contains(" else")){nodes += 1; edges +=1; continue;}
+                if(data.contains(" while")){nodes += 2; edges += 3; continue;}
+                if(data.contains(" for")){nodes += 2; edges += 3; continue;}
+                if(data.contains(" switch")){nodes +=1; edges += 1; continue;}
+                if(data.contains(" case")){nodes += 1; nodes +=2; continue;}
 
             }
 
@@ -51,6 +69,7 @@ public class WMC_Calculator {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
         }
+        WMC += edges - nodes + 2;
 
         if(methodCount == -1){
             return 1;
@@ -63,7 +82,7 @@ public class WMC_Calculator {
         if(WMC == 0){
             WMC = 1;
         }
-        return Math.max(WMC/methodCount,1);
+        return (double)Math.max(WMC/methodCount,1);
     }
 
     /**
@@ -72,9 +91,9 @@ public class WMC_Calculator {
      * @param classes un tableau de classe se trouvant dans le paquet
      * @return le WCP pondere des classes se trouvant dans la paquet fourni
      */
-    public int paquet_WCP(Paquet paquet, ArrayList<Classe> classes){
-        int sumWMC = 0;
-        int classCount = 0;
+    public double paquet_WCP(Paquet paquet, ArrayList<Classe> classes){
+        double sumWMC = 0;
+        double classCount = 0;
         String paquetDir = paquet.getDir();
 
         for (int i = 0; i < classes.size(); i++) {
@@ -83,7 +102,7 @@ public class WMC_Calculator {
 
             if (classe.getDir().contains(paquetDir)) {
 
-                sumWMC += Integer.valueOf(classe.getWMC());
+                sumWMC += Double.valueOf(classe.getWMC());
                 classCount++;
 
             }
@@ -101,7 +120,7 @@ public class WMC_Calculator {
      */
     public void calculateWMC(Classe classe){
 
-        classe.setWMC(Integer.toString(class_WMC(classe.getDir())));
+        classe.setWMC(Double.toString(class_WMC(classe.getDir())));
 
     }
 

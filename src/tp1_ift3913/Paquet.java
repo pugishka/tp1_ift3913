@@ -57,6 +57,9 @@ public class Paquet {
 
 	public String getWCP() { return this.WCP; }
 
+	/**
+	 * calcule le BC du paquet et l'assigne
+	 */
 	public void setPaquet_BC(){
 
 		if(this.WCP == null || this.dc == null) {
@@ -65,7 +68,7 @@ public class Paquet {
 			return;
 		}
 
-		if(Integer.valueOf(this.WCP) == 0){
+		if(Double.valueOf(this.WCP) == 0){
 			this.paquet_BC = "0";
 		}
 

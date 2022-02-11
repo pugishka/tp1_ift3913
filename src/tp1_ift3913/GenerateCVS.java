@@ -30,7 +30,7 @@ public class GenerateCVS {
 			writer.append(",");
 			writer.append("classe_DC");
 			writer.append(",");
-			writer.append("classe_WMC");
+			writer.append("WMC");
 			writer.append(",");
 			writer.append("classe_BC");
 			writer.append("\n");
@@ -73,7 +73,7 @@ public class GenerateCVS {
 			writer.append(",");
 			writer.append("paquet_DC");
 			writer.append(",");
-			writer.append("paquet_WCP");
+			writer.append("WCP");
 			writer.append(",");
 			writer.append("paquet_BC");
 			writer.append("\n");
