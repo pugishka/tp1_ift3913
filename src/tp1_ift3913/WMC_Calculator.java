@@ -63,7 +63,7 @@ public class WMC_Calculator {
         if(WMC == 0){
             WMC = 1;
         }
-        return WMC/methodCount;
+        return Math.max(WMC/methodCount,1);
     }
 
     /**
